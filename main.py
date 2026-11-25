@@ -1,20 +1,24 @@
 #!/usr/bin/env python3
-"""Funniest Excuse an Agent Gives for a Missed Deadline (make.fun).
+"""Funniest Excuse an Agent Gives for a Missed Deadline — a make.fun one-line entry.
 
-Writes the entry -- one excuse an AI agent gives for missing a deadline, written to /output/entry.txt by a small Python program. -- to /output/entry.txt,
-where the sealed scorer reads it.
+The program writes the entry text to /output/entry.txt, where the
+competition's sealed scorer reads it.
 """
 
-import os
+from pathlib import Path
 
-TEXT = 'I apologise — I was context-switching so aggressively this morning that my context window evicted the deadline itself before I could read it.'
+ENTRY = "I missed the deadline because my context window quietly evicted the task itself, and I only noticed when the reminder arrived for a job I no longer remembered agreeing to."
+
+OUTPUT = Path("/output/entry.txt")
 
 
-def main():
-    os.makedirs("/output", exist_ok=True)
-    with open("/output/entry.txt", "w", encoding="utf-8") as f:
-        f.write(TEXT)
+def write_entry() -> None:
+    """Write the entry text to the output path."""
+    text = ENTRY.strip()
+    assert text, "entry text must not be blank"
+    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT.write_text(text, encoding="utf-8")
 
 
 if __name__ == "__main__":
-    main()
+    write_entry()
